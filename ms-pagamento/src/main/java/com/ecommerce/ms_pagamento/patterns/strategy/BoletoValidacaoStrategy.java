@@ -5,22 +5,22 @@ import org.springframework.stereotype.Component;
 import com.ecommerce.ms_pagamento.models.PagamentoRequest;
  
 /**
- * Regra de validação específica do Boleto.
- *
- * TODO: implementar a regra (ex: valor > 0).
+ * Regra de validação do Boleto: valor positivo + valor mínimo simulado
+ * (bancos costumam ter um mínimo pra emitir boleto).
  */
 @Component("boleto")
 public class BoletoValidacaoStrategy implements ValidacaoStrategy {
  
-    @Override
-    public boolean validar(PagamentoRequest request) {
-        // TODO
-        return false;
-    }
+    private static final double VALOR_MINIMO = 5.0;
  
     @Override
-    public String getMotivoRecusa() {
-        // TODO
-        return null;
+    public ValidacaoResultado validar(PagamentoRequest request) {
+        if (request.getValor() == null || request.getValor() <= 0) {
+            return ValidacaoResultado.recusado("Valor deve ser maior que zero");
+        }
+        if (request.getValor() < VALOR_MINIMO) {
+            return ValidacaoResultado.recusado("Valor abaixo do mínimo permitido para boleto");
+        }
+        return ValidacaoResultado.aprovado();
     }
 }
