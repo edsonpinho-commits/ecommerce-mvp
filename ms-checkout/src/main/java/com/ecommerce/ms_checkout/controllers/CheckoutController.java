@@ -15,9 +15,13 @@ public class CheckoutController {
     }
 
     @PostMapping
-    public ResponseEntity<String> finishBuy(@RequestBody Order order, @RequestParam String type) {
-        checkoutProcessor.performCheckout(order, type.toUpperCase());
+    public ResponseEntity<String> finishBuy(@RequestBody CheckoutRequest request) {
+        Order order = new Order();
+        order.setTotal(request.valor());
+
+        checkoutProcessor.executeCheckout(order, request.tipo().toUpperCase());
 
         return ResponseEntity.ok("Checkout finalizado!");
     }
 }
+record CheckoutRequest(Double valor, String tipo) {}

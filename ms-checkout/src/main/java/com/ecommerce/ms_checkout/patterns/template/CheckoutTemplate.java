@@ -3,7 +3,7 @@ package com.ecommerce.ms_checkout.patterns.template;
 import com.ecommerce.ms_checkout.models.Order;
 
 public abstract class CheckoutTemplate {
-    public final void performCheckout(Order order, String paymentType) {
+    public final void executeCheckout(Order order, String paymentType) {
         authUser(order);
         processDebit(order, paymentType);
         sendReceipt(order);

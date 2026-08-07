@@ -5,7 +5,9 @@ import com.ecommerce.ms_checkout.models.PaymentReturn;
 import com.ecommerce.ms_checkout.patterns.factory.PaymentFactory;
 import com.ecommerce.ms_checkout.patterns.strategy.PaymentStrategy;
 import com.ecommerce.ms_checkout.repositories.OrderRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CheckoutProcessor extends CheckoutTemplate {
     private final PaymentFactory paymentFactory;
     private final OrderRepository orderRepository;
