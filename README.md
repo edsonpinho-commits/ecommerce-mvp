@@ -7,26 +7,6 @@ Arquivos incluídos:
 - `docs/diagrams/c4-context.mmd` — Contexto (Nível 1)
 - `docs/diagrams/c4-container.mmd` — Containers (Nível 2)
 
-Como usar
-
-1. Visualizar direto no GitHub:
-   - O GitHub renderiza blocos Mermaid dentro de arquivos Markdown em algumas versões/instalações. Abra este README ou os arquivos `.mmd` no GitHub para ver os diagramas (se suportado).
-
-2. Gerar imagens (SVG/PNG) localmente:
-   - Instale o Mermaid CLI:
-     - npm: `npm i -g @mermaid-js/mermaid-cli`
-   - Gere SVG:
-     - `mmdc -i docs/diagrams/c4-context.mmd -o docs/diagrams/c4-context.svg`
-     - `mmdc -i docs/diagrams/c4-container.mmd -o docs/diagrams/c4-container.svg`
-
-3. Visualizar online:
-   - Cole o conteúdo dos arquivos `.mmd` em https://mermaid.live/ para edição e exportação rápida.
-
-Sugestões
-
-- Adicione as versões SVG geradas em `docs/diagrams/` para visualização imediata no GitHub.
-- Inclua ADRs em `docs/adrs/` (pelo menos 2 arquivos) e a documentação de defesa em `docs/defesa/`.
-
 ---
 
 Diagrama (Contexto) — arquivo: `docs/diagrams/c4-context.mmd`
