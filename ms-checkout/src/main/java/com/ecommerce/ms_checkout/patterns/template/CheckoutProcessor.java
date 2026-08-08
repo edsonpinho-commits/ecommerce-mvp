@@ -18,18 +18,9 @@ public class CheckoutProcessor extends CheckoutTemplate {
     }
 
     @Override
-    protected void processDebit(Order order, String paymentType) {
+    protected PaymentReturn processDebit(Order order, String paymentType) {
         PaymentStrategy strategy = paymentFactory.getStrategy(paymentType);
-
-        PaymentReturn response = strategy.process(order);
-
-        if (response != null && "aprovado".equalsIgnoreCase(response.getStatus())) {
-            order.setStatus("PAGO");
-        } else {
-            order.setStatus("FALHA");
-        }
-
-        System.out.println("Resposta " + (response == null ? "sem resposta" : response.getStatus()));
+        return strategy.process(order);
     }
 
     @Override
