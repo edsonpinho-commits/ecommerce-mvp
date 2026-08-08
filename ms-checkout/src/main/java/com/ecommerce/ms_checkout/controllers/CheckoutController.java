@@ -1,5 +1,6 @@
 package com.ecommerce.ms_checkout.controllers;
 
+import com.ecommerce.ms_checkout.models.CheckoutResponse;
 import com.ecommerce.ms_checkout.models.Order;
 import com.ecommerce.ms_checkout.patterns.template.CheckoutProcessor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class CheckoutController {
     }
 
     @PostMapping
-    public ResponseEntity<String> finishBuy(@RequestBody CheckoutRequest request) {
+    public ResponseEntity<?> finishBuy(@RequestBody CheckoutRequest request) {
         if (request.valor() == null || request.valor() <= 0) {
             return ResponseEntity.badRequest().body("O valor do pedido deve ser maior que zero.");
         }
@@ -33,16 +34,16 @@ public class CheckoutController {
                 : request.tipo().trim().toLowerCase(Locale.ROOT);
 
         try {
-            checkoutProcessor.executeCheckout(order, paymentType);
+            CheckoutResponse response = checkoutProcessor.executeCheckout(order, paymentType);
+
+            if ("FALHA".equals(response.status())) {
+                return ResponseEntity.unprocessableEntity().body(response);
+            }
+
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        if ("FALHA".equals(order.getStatus())) {
-            return ResponseEntity.unprocessableEntity().body("Pagamento recusado.");
-        }
-
-        return ResponseEntity.ok("Checkout finalizado!");
     }
 }
 record CheckoutRequest(Double valor, String tipo) {}
