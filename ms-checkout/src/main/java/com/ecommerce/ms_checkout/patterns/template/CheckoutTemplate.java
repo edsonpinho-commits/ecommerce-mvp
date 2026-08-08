@@ -6,7 +6,11 @@ public abstract class CheckoutTemplate {
     public final void executeCheckout(Order order, String paymentType) {
         authUser(order);
         processDebit(order, paymentType);
-        sendReceipt(order);
+        saveOrderStatus(order);
+
+        if ("PAGO".equals(order.getStatus())) {
+            sendReceipt(order);
+        }
     }
 
     protected void authUser(Order order) {
