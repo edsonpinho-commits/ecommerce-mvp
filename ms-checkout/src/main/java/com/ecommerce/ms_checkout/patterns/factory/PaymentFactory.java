@@ -14,6 +14,10 @@ public class PaymentFactory {
     }
 
     public PaymentStrategy getStrategy(String paymentType) {
-        return null;
+        PaymentStrategy strategy = strategies.get(paymentType);
+        if (strategy == null) {
+            throw new IllegalArgumentException("Tipo de pagamento não suportado: " + paymentType);
+        }
+        return strategy;
     }
 }

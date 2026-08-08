@@ -7,15 +7,15 @@ import org.springframework.web.client.RestClient;
 
 import java.util.Map;
 
-@Service("CARTAO")
+@Service("cartao")
 public class CardStrategy implements PaymentStrategy {
     private final RestClient restClient = RestClient.create();
 
     @Override
     public PaymentReturn process(Order order) {
-        Map<String, Object> payload = Map.of("valor", order.getTotal(), "tipo", "CARTAO");
+        Map<String, Object> payload = Map.of("valor", order.getTotal(), "tipo", "cartao");
 
-        PaymentReturn response = restClient.post().uri("http://localhost:8080/api/pagamentos").header("Tipo-Pagamento", "CARTAO").body(order).retrieve().body(PaymentReturn.class);
+        PaymentReturn response = restClient.post().uri("http://localhost:8080/api/pagamentos").header("Tipo-Pagamento", "cartao").body(payload).retrieve().body(PaymentReturn.class);
         return response;
     }
 }
