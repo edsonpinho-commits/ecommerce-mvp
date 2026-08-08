@@ -1,0 +1,12 @@
+C4Context
+title Contexto (Nível 1) — E-commerce MVP
+
+Person(cliente, "Cliente", "Usuário final que navega, adiciona produtos ao carrinho e finaliza compras")
+Person(admin, "Administrador", "Gerencia catálogo, pedidos e configurações do sistema")
+System_Ext(pagamento_externo, "Fornecedor de Pagamento (Gateway)", "Serviço de terceiros que processa transações")
+
+System(ecommerce, "E-commerce MVP", "Sistema de comércio eletrônico composto por microserviços para checkout e pagamento")
+
+Rel(cliente, ecommerce, "Usa para buscar produtos, gerenciar carrinho e comprar (Web / Mobile)")
+Rel(admin, ecommerce, "Usa para gerenciar catálogo e pedidos")
+Rel(ecommerce, pagamento_externo, "Integra para processar transações (API segura)")
