@@ -23,13 +23,13 @@ public class CheckoutProcessor extends CheckoutTemplate {
 
         PaymentReturn response = strategy.process(order);
 
-        if ("APROVADO".equals(response.getStatus())) {
+        if (response != null && "aprovado".equalsIgnoreCase(response.getStatus())) {
             order.setStatus("PAGO");
         } else {
             order.setStatus("FALHA");
         }
 
-        System.out.println("Resposta " + response.getStatus());
+        System.out.println("Resposta " + (response == null ? "sem resposta" : response.getStatus()));
     }
 
     @Override
