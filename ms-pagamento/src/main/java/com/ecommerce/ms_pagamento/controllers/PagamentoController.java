@@ -14,7 +14,7 @@ import com.ecommerce.ms_pagamento.patterns.strategy.ValidacaoStrategy;
 
 /**
  * Recebe o POST do ms-checkout, valida usando a Strategy certa
- * (escolhida pela Factory) e devolve 200 (aprovado) ou 400 (recusado).
+ * (escolhida pela Factory) e devolve o resultado da transação.
  */
 @RestController
 @RequestMapping("/api/pagamentos")
@@ -35,7 +35,10 @@ public class PagamentoController {
             if (resultado.isAprovado()) {
                 return ResponseEntity.ok(new PagamentoResponse("aprovado", null));
             }
-            return ResponseEntity.badRequest().body(new PagamentoResponse("recusado", resultado.getMotivo()));
+            // Uma recusa é um resultado esperado do negócio, não uma falha técnica
+            // da API. Assim o checkout consegue ler o corpo da resposta e atualizar
+            // o pedido como FALHA.
+            return ResponseEntity.ok(new PagamentoResponse("recusado", resultado.getMotivo()));
 
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(new PagamentoResponse("recusado", e.getMessage()));
